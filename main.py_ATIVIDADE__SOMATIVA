@@ -1,4 +1,12 @@
 #MICHEL ZULSZESKI CÁCERES - ANÁLISE E DESENVOLVIMENTO DE SISTEMAS
+  
+lista = [
+        {"codigo": 1, "nome": "Lucas", "cpf": "999"},
+        {"codigo": 2, "nome": "Pedro", "cpf": "555"},
+        {"codigo": 3, "nome": "Helena", "cpf": "123"}
+    ]
+
+
 while True:
     #Menu principal
     print("Seja bem vindo ao menu principal!")
@@ -8,12 +16,6 @@ while True:
     print("4. Matrículas")
     print("5. Turmas")
     print("0. Sair")
-
-    lista = [
-        {"codigo": 1, "nome": "Lucas", "cpf": "999"},
-        {"codigo": 2, "nome": "Pedro", "cpf": "555"},
-        {"codigo": 3, "nome": "Helena", "cpf": "123"}
-    ]
 
 
     def cadastrar_estudante(lista):
