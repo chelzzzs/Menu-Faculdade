@@ -1,2 +1,17 @@
 # Menu-Faculdade
-Em Python através do Pycharm criei um código que apresentava um menu com as seguintes opções: estudantes, diciplinas, professores, matérias. E um menu secundário com as opções: criar, listar, excluir e atualizar.  Esses menus foram feitos a partir de um Loop While True que tem um break quando um usuário executa a opção com sucesso.  
+
+Projeto em Python que apresenta um menu com as seguintes opções:
+- Estudantes
+- Disciplinas
+- Professores
+- Matérias
+
+Menu secundário com as opções:
+- Criar
+- Listar
+- Excluir
+
+## Como executar
+
+1. Certifique-se de ter o Python instalado.
+2. Execute o script `menu_faculdade.py` no terminal ou através de uma IDE como o PyCharm.
