@@ -1,0 +1,141 @@
+#Michel Zulszeski Cáceres - Análise e Desenvolvimento de Sistemas
+
+import json
+
+# ARQUIVOS POR TIPO
+ARQUIVOS = {
+    "1": ("Estudante", "estudantes.json"),
+    "2": ("Professor", "professores.json"),
+    "3": ("Disciplina", "disciplinas.json"),
+    "4": ("Matrícula", "matriculas.json"),
+    "5": ("Turma", "turmas.json")
+}
+
+def salvar_arquivo(lista, arquivo):
+    with open(arquivo, 'w') as file:
+        json.dump(lista, file)
+
+def ler_arquivo(arquivo):
+    try:
+        with open(arquivo, 'r') as file:
+            return json.load(file)
+    except:
+        return []
+
+def listar_cadastros(tipo, arquivo):
+    lista = ler_arquivo(arquivo)
+    if len(lista) == 0:
+        print(f"Nenhum {tipo} cadastrado.")
+    else:
+        print(f"\nLista de {tipo}s:")
+        for item in lista:
+            dados = ', '.join(f"{k.capitalize()}: {v}" for k, v in item.items())
+            print(dados)
+
+def cadastrar(tipo, arquivo):
+    lista = ler_arquivo(arquivo)
+    cadastro = {}
+
+    cadastro["nome"] = input(f"Digite o nome do(a) {tipo}: ")
+    cadastro["codigo"] = int(input(f"Digite o código de {tipo}: "))
+
+    if tipo in ["Estudante", "Professor"]:
+        cadastro["cpf"] = input(f"Digite o CPF do(a) {tipo}: ")
+
+    elif tipo == "Disciplina":
+        cadastro["carga_horaria"] = input("Digite a carga horária da Disciplina: ")
+
+    elif tipo == "Matrícula":
+        cadastro["id_estudante"] = input("Digite o código do Estudante: ")
+        cadastro["id_disciplina"] = input("Digite o código da Disciplina: ")
+
+    elif tipo == "Turma":
+        cadastro["semestre"] = input("Digite o semestre da Turma: ")
+
+    lista.append(cadastro)
+    salvar_arquivo(lista, arquivo)
+    print(f"{tipo} cadastrado(a) com sucesso!")
+
+def atualizar_cadastro(tipo, arquivo):
+    lista = ler_arquivo(arquivo)
+    codigo = int(input(f"Digite o código do(a) {tipo} a ser atualizado(a): "))
+    for item in lista:
+        if item["codigo"] == codigo:
+            item["nome"] = input(f"Digite o novo nome do(a) {tipo}: ")
+
+            if tipo in ["Estudante", "Professor"]:
+                item["cpf"] = input(f"Digite o novo CPF do(a) {tipo}: ")
+
+            elif tipo == "Disciplina":
+                item["carga_horaria"] = input("Digite a nova carga horária da Disciplina: ")
+
+            elif tipo == "Matrícula":
+                item["id_estudante"] = input("Digite o novo código do Estudante: ")
+                item["id_disciplina"] = input("Digite o novo código da Disciplina: ")
+
+            elif tipo == "Turma":
+                item["semestre"] = input("Digite o novo semestre da Turma: ")
+
+            salvar_arquivo(lista, arquivo)
+            print(f"{tipo} atualizado(a) com sucesso.")
+            return
+    print("Código não encontrado.")
+
+def remover_cadastro(tipo, arquivo):
+    lista = ler_arquivo(arquivo)
+    codigo = int(input(f"Digite o código do(a) {tipo} a ser removido(a): "))
+    for item in lista:
+        if item["codigo"] == codigo:
+            lista.remove(item)
+            salvar_arquivo(lista, arquivo)
+            print(f"{tipo} removido(a) com sucesso.")
+            return
+    print("Código não localizado.")
+
+def processar_secundario(opcao_secundaria, tipo, arquivo):
+    if opcao_secundaria == "1":
+        cadastrar(tipo, arquivo)
+    elif opcao_secundaria == "2":
+        listar_cadastros(tipo, arquivo)
+    elif opcao_secundaria == "3":
+        atualizar_cadastro(tipo, arquivo)
+    elif opcao_secundaria == "4":
+        remover_cadastro(tipo, arquivo)
+    elif opcao_secundaria == "5":
+        return False
+    else:
+        print("Você digitou uma opção INVÁLIDA! Por favor, tente novamente.")
+    return True
+
+# MENU PRINCIPAL
+while True:
+    print("\nSeja bem-vindo ao menu principal!")
+    print("1. Estudantes")
+    print("2. Professores")
+    print("3. Disciplinas")
+    print("4. Matrículas")
+    print("5. Turmas")
+    print("0. Sair")
+
+    opcao = input("Por gentileza, digite uma opção válida: ")
+
+    if opcao in ARQUIVOS:
+        tipo, arquivo = ARQUIVOS[opcao]
+        while True:
+            print(f"\nVocê selecionou a opção {tipo}")
+            print("Menu de operações:")
+            print("1. Criar")
+            print("2. Listar")
+            print("3. Atualizar")
+            print("4. Excluir")
+            print("5. Voltar ao menu principal")
+
+            opcao_secundaria = input("Digite uma opção válida: ")
+            if not processar_secundario(opcao_secundaria, tipo, arquivo):
+                break
+
+    elif opcao == "0":
+        print("SAINDO...")
+        break
+    else:
+        print("Você digitou uma opção INVÁLIDA! Por favor, tente novamente.")
