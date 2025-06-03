@@ -10,6 +10,7 @@ Menu secundário com as opções:
 - Criar
 - Listar
 - Excluir
+- Atualizar (editar)
 
 ## Como executar
 
